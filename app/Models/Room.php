@@ -12,6 +12,7 @@ class Room extends Model
 'roomNo',
 'metreNo',
 'lukuNo',
+'roomType',
 'amount',
     ];
     use HasFactory;

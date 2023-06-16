@@ -4,13 +4,33 @@ namespace App\Http\Controllers;
 
 use App\Models\Tenant;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Validator;
 
 class TenantController extends Controller
 {
     public function add(Request $request){
-        $tenant = $request->all();
-        Tenant::create($tenant);
-        if($tenant){
+
+       $tenantDetails = new Tenant();
+       $tenantDetails->firstname=$request->input('firstname');
+       $tenantDetails->lastname=$request->input('lastname');
+       $tenantDetails->phoneNumber=$request->input('phoneNo');
+       $tenantDetails->amountPaid=$request->input('amountPaid');
+       $tenantDetails->startDate=$request->input('startDate');
+       $tenantDetails->endDate=$request->input('endDate');
+       $tenantDetails->roomNo=$request->input('roomNo');
+       $tenantDetails->currMetreReading=$request->input('metre');
+
+       
+            
+       if($request->hasFile('contract')){
+        $path = $request->file('contract')->store('files');
+        $tenantDetails->contract = $path;
+   }
+       
+
+       $tenantDetails->save();
+
+        if($tenantDetails){
             return response()->json([
                 'status'=>200,
                 'message'=>'Tenant Added Successfully!'
@@ -57,17 +77,22 @@ class TenantController extends Controller
         if($availTenant){
          $availTenant->firstname = $request->input('firstname');
          $availTenant->lastname = $request->input('lastname');
-         $availTenant->phoneNumber = $request->input('phoneNumber');
+         $availTenant->phoneNumber = $request->input('phoneNo');
          $availTenant->contract = $request->input('contract');
          $availTenant->startDate = $request->input('startDate');
          $availTenant->endDate = $request->input('endDate');
-         $availTenant->currMetreReading = $request->input('currMetreReading');
+         $availTenant->currMetreReading = $request->input('metre');
          $availTenant->amountPaid = $request->input('amountPaid');
+        
+         if($request->hasFile('contract')){
+            $path = $request->file('contract')->store('public/files');
+            $$availTenant->contract = $path;
+       }
          $availTenant->update();
 
          return response()->json([
             'status'=>200,
-            'availTenant'=>$availTenant
+            'availTenant'=>$availTenant,
         ]);
          
         }else{

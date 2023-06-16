@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('metreNo');
             $table->bigInteger('lukuNo');
             $table->string('roomType');
-            $table->float('currMetreReading');
+            $table->float('currMetreReading')->default(0);
             $table->double('amount');
             $table->timestamps();
         });

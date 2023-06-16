@@ -26,11 +26,12 @@ Route::post('/login',[UserController::class,'login']);
 
 
 Route::post('/addTenant',[TenantController::class,'add']);
+Route::get('/getTenant/{id}',[TenantController::class,'getOne']);
+Route::put('/updateTenant/{id}', [TenantController::class, 'updateTenant']);
 Route::middleware(['auth:sanctum'])->group(function(){
 
-Route::get('/getTenant/{id}',[TenantController::class,'getOne']);
 Route::get('/getAllTenants',[TenantController::class,'getAll']);
-Route::put('/updateTenant/{id}', [TenantController::class, 'updateTenant']);
+
 Route::post('/addMetre', [MetreController::class, 'add']);
 Route::put('/updateMetre/{id}', [MetreController::class, 'update']);
 Route::get('/getMetre', [MetreController::class, 'view']);

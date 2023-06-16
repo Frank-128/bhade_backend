@@ -10,8 +10,9 @@ class RoomController extends Controller
     public function add(Request $request){
     $room = new Room;
     $room->roomNo=$request->input('roomNo');
-    $room->metreNo=$request->input('metreNo');
+    $room->metreNo=$request->input('metre');
     $room->lukuNo=$request->input('lukuNo');
+    $room->roomType=$request->input('roomType');
     $room->amount=$request->input('amount');
     $room->save();
     return response()->json(['message'=>'Room successfully added','status'=>200]);
