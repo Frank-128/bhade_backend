@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\MetreController;
 use App\Http\Controllers\RoomController;
+use App\Http\Controllers\TaskController;
 use App\Http\Controllers\TenantController;
 use App\Http\Controllers\UserController;
 use Illuminate\Http\Request;
@@ -41,3 +42,11 @@ Route::get('/viewRooms',[RoomController::class,"view"]);
 Route::get('/viewOneRoom/{id}',[RoomController::class,"viewOne"]);
 });
 Route::post('/addRoom',[RoomController::class,"add"]);
+
+// Tasks
+Route::get('/allTasks',[TaskController::class,'get']);
+Route::get('/task/{id}',[TaskController::class,'getOne']);
+Route::post('/addTask',[TaskController::class,'add']);
+Route::put('/updateTask/{id}',[TaskController::class,'update']);
+Route::delete('/deleteTask',[TaskController::class,'remove']);
+
