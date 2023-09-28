@@ -2,9 +2,11 @@
 
 namespace App\Console;
 
-use App\Jobs\ScheduleTaskNotification;
+use App\Events\TaskNotificationEvent;
+use App\Models\Tasks;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
+use Illuminate\Support\Facades\Redis;
 
 class Kernel extends ConsoleKernel
 {
@@ -14,7 +16,19 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->job(new ScheduleTaskNotification())->everyMinute();
+        $schedule->call(function(){
+            $dueTaskKeys = Redis::keys('task:*');
+             
+            foreach($dueTaskKeys as $taskKey){
+                $taskId = substr($taskKey,20);
+                $task = Tasks::findOrFail($taskId);
+                event(new TaskNotificationEvent($task));
+                
+                Redis::del($taskKey);
+
+            }
+
+        })->everyMinute();
     }
 
     /**
