@@ -20,7 +20,7 @@ class TaskNotificationEvent implements ShouldBroadcast
     public function __construct($task)
     {
         //
-         $this->$task = $task;
+         $this->task = $task;
     }
 
     public function broadcastOn()

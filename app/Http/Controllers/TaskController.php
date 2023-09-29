@@ -45,13 +45,13 @@ class TaskController extends Controller
 
     public function update(Request $request,$id){
         $task = Tasks::find($id);
-        $task->task = $request->task;
+        
         $task->status = $request->status;
         $task->save();
-        $dueDate = $task->task_time;
-        $taskId = $task->id;
+        // $dueDate = $task->task_time;
+        // $taskId = $task->id;
 
-        $this->taskSchedulerService->scheduleTaskDueDate($taskId,$dueDate);
+        // $this->taskSchedulerService->scheduleTaskDueDate($taskId,$dueDate);
 
         return response()->json(['task'=>$task],204);
 

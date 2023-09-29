@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('name');
             $table->dateTime('task_time');
-            $table->boolean('status')->default(false);
+            $table->boolean('status')->default(0);
             $table->timestamps();
         });
     }
